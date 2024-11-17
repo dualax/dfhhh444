@@ -1,0 +1,597 @@
+Задание 1
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+  final apiKey = 'f6c39fc6caced1304a7c47b9a181c809';
+  final city = 'Moscow';
+  final url = 'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
+
+  final response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200){
+    final data = jsonDecode(response.body);
+    final temp = data ['main' ]['temp' ];
+    final description = data[ 'weather' ][0]['description'];
+    final icon = data ['weather'] [0]['icon'];
+
+    print ('температура :$temp C');
+    print ('Погода $description');
+    print ('Иконка: http://openweathermap.org/img/wn/$icon@2x.png') ;
+    } else {
+      print('ошибка: ${response.statusCode}' );
+}
+}
+
+Задание 2
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+final apikey = 'b6879cde';
+final query = 'quer';
+final url = 'http://www.omdbapi.com/?i=tt3896198&apikey=b6879cde';
+
+final response = await http.get(Uri.parse(url));
+if (response. statusCode == 200){final data = jsonDecode(response.body);
+  final title = data ['Title'];
+  final year = data[ 'Year'];
+  final poster = data ['Poster'];
+
+  print ('название :$title C');
+  print ('Год выпуска $year ');
+  print ('nocTep $poster');
+
+  } else {
+    print('ошибка: ${response.statusCode}');
+  }
+}
+
+Задание 4
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+    final username = 'flutter';
+    final url = 'https://api.github.com/users/$username';
+
+    final response = await http.get(Uri.parse(url));
+    
+    if (response.statusCode == 200){
+      final data = jsonDecode(response.body) ;
+      final name = data[ 'name'];
+      final bio = data['bio'];
+      final repos = data[ 'public_repos'];
+
+      print('Имя: $name ');
+      print('Био: $bio');
+      print('Кол-во репозиториев: $repos');
+    } else {
+      print('Ошибка: ${response.statusCode}' );
+  }
+}
+
+Задание 5
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+    final apiKey = 'a71d9815effb4ef0a218a8851b86c612';
+    final url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey';
+    
+    final response = await http.get(Uri.parse(url) );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final articles = data[ 'articles'];
+        for (var article in articles) {
+        final title = article['title'];
+        final description = article['description' ];
+        final url = article['url'];
+        print('Заголовок: $title');
+        print('Описание: $description');
+        print('Ссылка: $url' );
+        print("");
+      }
+    }else{
+        print( 'Ошибка: ${response.statusCode}');
+        }
+}
+
+Задание 6
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+
+void main() async{
+  final apiKey = 'b6879cde';
+  final query = 'quer';
+  final url = 'http://www.omdbapi.com/?i=tt3896198&apikey=b6879cde';
+  final dio = Dio();
+  final response = await dio.get(url);
+
+  if(response.statusCode == 200) {
+    final data = response.data;
+    final title = data ['Title'];
+    final year = data['Year'];
+    final poster = data['Poster'];
+
+    print ('Название: $title C');
+    print ('Год выпуска $year');
+    print('Постер $poster');
+  }else {
+    print('ошибка: ${response.statusCode}');
+  }
+  }
+
+Задание 7
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+
+void main() async{
+  final apiKey = 'f6c39fc6caced1304a7c47b9a181c809';
+    final city = 'Moscow';
+    final url = 'https://api.opemweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
+  final dio = Dio();
+  final response = await dio.get(url);
+
+  if(response.statusCode == 200) {
+    final data = response.data;
+    final temp = data['main']['temp'];
+    final description = data[ 'weather ' ][0][ 'description'];
+    final icon = data[ 'weather ' ] [0]['icon'];
+
+    print('Температура: $temp градусов С');
+    print('Погода: $description');
+    print('Иконка: http://openweathermap.org/img/wn/$icon@2x.png');
+  }else {
+    print('ошибка: ${response.statusCode}');
+  }
+  }
+
+Задание 9
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+
+void main() async{
+  final apiKey = 'a71d9815effb4ef0a218a8851b86c612';
+  final url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey';
+  
+  final dio = Dio();
+  final response = await dio.get(url);
+
+  if(response.statusCode == 200) {
+    final data = response.data;
+    final articles = data['articles'];
+        for (var article in articles) {
+        final title = article['title'];
+        final description = article['description' ];
+        final url = article['url'];
+        print('Заголовок: $title');
+        print('Описание: $description');
+        print('Ссылка: $url' );
+        print("");
+        }
+  }else {
+    print('ошибка: ${response.statusCode}');
+  }
+  }
+
+Задание 10
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+
+void main() async{
+   final username = 'flutter';
+    final url = 'https://api.github.com/users/$username';
+  
+  final dio = Dio();
+  final response = await dio.get(url);
+
+  if (response.statusCode == 200){
+      final data = response.data;
+      final name = data[ 'name'];
+      final bio = data['bio'];
+      final repos = data[ 'public_repos'];
+
+      print('Имя: $name ');
+      print('Био: $bio');
+      print('Кол-во репозиториев: $repos');
+  }else {
+    print('ошибка: ${response.statusCode}');
+  }
+  }
+
+Задание 11
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+    final apiKey = 'f6c39fc6caced1304a7c47b9a181c809';
+    final city = 'Moscow';
+    final url = 'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
+
+  try{
+    final response = await http.get(Uri.parse(url));
+    
+    if (response.statusCode == 200){
+      final data = jsonDecode(response.body);
+      final temp = data ['main' ]['temp' ];
+      final description = data[ 'weather' ][0]['description'];
+      final icon = data ['weather'] [0]['icon'];
+
+      print ('температура :$temp C');
+      print ('Погода $description');
+      print ('Иконка: http://openweathermap.org/img/wn/$icon@2x.png') ;
+      } else {
+        print('ошибка: ${response.statusCode}' );
+  }
+}
+  catch(e){
+    print('Ошибка: $e');
+  }
+}
+
+Задание 12
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+  final apikey = 'b6879cde';
+  final query = 'quer';
+  final url = 'http://www.omdbapi.com/?i=tt3896198&apikey=b6879cde';
+
+try{
+    final response = await http.get(Uri.parse(url));
+
+  if (response. statusCode == 200){final data = jsonDecode(response.body);
+    final title = data ['Title'];
+    final year = data[ 'Year'];
+    final poster = data ['Poster'];
+
+    print ('название :$title C');
+    print ('Год выпуска $year ');
+    print ('nocTep $poster');
+
+    } else {
+      print('ошибка: ${response.statusCode}');
+    }
+  }catch (e) {
+    print('ощибка: $e');
+  }
+}
+
+Задание 14
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+    final apiKey = 'a71d9815effb4ef0a218a8851b86c612';
+    final url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey';
+    
+    try{
+      final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final articles = data[ 'articles'];
+
+        for (var article in articles) {
+          final title = article['title'];
+          final description = article['description' ];
+          final url = article['url'];
+
+          print('Заголовок: $title');
+          print('Описание: $description');
+          print('Ссылка: $url' );
+          print("");
+      }
+    }else{
+        print( 'Ошибка: ${response.statusCode}');
+      }
+    }catch (e) {
+      print('Ошибка $e');
+    }
+}
+
+Задание 15
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async{
+      final username = 'flutter';
+      final url = 'https://api.github.com/users/$username';
+
+      try{
+        final response = await http.get(Uri.parse(url));
+      
+        if (response.statusCode == 200){
+          final data = jsonDecode(response.body) ;
+          final name = data[ 'name'];
+          final bio = data['bio'];
+          final repos = data[ 'public_repos'];
+
+          print('Имя: $name ');
+          print('Био: $bio');
+          print('Кол-во репозиториев: $repos');
+      } else {
+          print('Ошибка: ${response.statusCode}' );
+      }
+    }
+  catch (e) {
+    print('ошибка $e');
+  }
+}
+
+Задание 16
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+
+void main() async{
+    final apiKey = 'f6c39fc6caced1304a7c47b9a181c809';
+    final city = 'Moscow';
+    final url = 'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
+    final dio = Dio ();
+  try{
+    final response = await dio.get(url);
+    
+    if (response.statusCode == 200){
+      final data = response.data;
+      final temp = data ['main' ]['temp' ];
+      final description = data[ 'weather' ][0]['description'];
+      final icon = data ['weather'] [0]['icon'];
+
+      print ('температура :$temp C');
+      print ('Погода $description');
+      print ('Иконка: http://openweathermap.org/img/wn/$icon@2x.png') ;
+      } else {
+        print('ошибка: ${response.statusCode}' );
+  }
+}
+  catch(e){
+    print('Ошибка: $e');
+  }
+}
+
+Задание 17
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+
+void main() async{
+    final apiKey = 'b6879cde';
+    final query = 'quer';
+    final url = 'http://www.omdbapi.com/?i=tt3896198&apikey=b6879cde';
+
+    final dio = Dio ();
+  try{
+    final response = await dio.get(url);
+    
+    if (response.statusCode == 200){
+      final data = response.data;
+      final title = data ['Title'];
+      final year = data[ 'Year'];
+      final poster = data ['Poster'];
+
+      print ('название :$title');
+      print ('Год выпуска $year ');
+      print ('nocTep $poster');
+      } else {
+        print('ошибка: ${response.statusCode}' );
+  }
+}
+  catch(e){
+    print('Ошибка: $e');
+  }
+}
+
+Задание 19
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+
+void main() async{
+    final apiKey = 'a71d9815effb4ef0a218a8851b86c612';
+    final url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey';
+
+    final dio = Dio ();
+  try{
+    final response = await dio.get(url);
+    
+    if (response.statusCode == 200){
+      final data = response.data;
+      final articles = data[ 'articles'];
+
+        for (var article in articles) {
+          final title = article['title'];
+          final description = article['description' ];
+          final url = article['url'];
+
+          print('Заголовок: $title');
+          print('Описание: $description');
+          print('Ссылка: $url' );
+          print("");
+        }
+      } else {
+        print('ошибка: ${response.statusCode}' );
+  }
+}
+
+Задание 20
+
+import 'dart:convert';
+import 'package:dio/dio.dart';
+
+void main() async{
+    final username = 'flutter';
+    final url = 'https://api.github.com/users/$username';
+
+    final dio = Dio ();
+  try{
+    final response = await dio.get(url);
+    
+    if (response.statusCode == 200){
+      final data = response.data;
+      final name = data[ 'name'];
+      final bio = data['bio'];
+      final repos = data[ 'public_repos'];
+
+      print('Имя: $name ');
+      print('Био: $bio');
+      print('Кол-во репозиториев: $repos');
+        }
+     else {
+        print('ошибка: ${response.statusCode}' );
+  }
+}
+  catch(e){
+    print('Ошибка: $e');
+  }
+}
+
+Индивидуальные задания
+
+Задание 1
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final apiKey = '5a7a717ea7194b81ac263eebc43f62e5';
+  final ingredients = 'chicken, tomat';
+  final url = Uri.parse(
+      'https://api.spoonacular.com/recipes/findByIngredients?apiKey=$apiKey&ingredients=$ingredients&number=5');
+
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> recipes = jsonDecode(response.body);
+      if (recipes.isNotEmpty) {
+        print('Найденные рецепты:');
+        for (final recipeData in recipes) {
+          final title = recipeData['title'] ?? 'Название не указано';
+          final image = recipeData['image'] ?? 'Изображение не найдено';
+          print('- $title');
+          print(' Изображение: $image');
+        }
+      } else {
+        print('Рецепты не найдены.');
+      }
+    } else {
+      print('Ошибка при получении данных: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Произошла ошибка: $e');
+  }
+}
+
+Задание 2
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+void main() async {
+  final apiKey = 'a71d9815effb4ef0a218a8851b86c612';
+  final topic = 'technology';
+  final url = Uri.parse(
+      'https://newsapi.org/v2/top-headlines?country=us&category=$topic&apiKey=$apiKey');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      if (jsonResponse.containsKey('articles')) {
+        final articles = jsonResponse['articles'] as List;
+        final count = articles.length;
+        print('Количество новостей о $topic: $count');
+
+        // Вывод заголовков новостей (для демонстрации)
+        for (final article in articles) {
+          final title = article['title'] ?? 'Без заголовка';
+          print('- $title');
+        }
+
+      } else {
+        print('Ответ API не содержит статьи.');
+      }
+    } else {
+      print('Ошибка при получении данных: ${response.statusCode}');
+    }
+}
+
+Задание 3
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final apiKey = 'f6c39fc6caced1304a7c47b9a181c809'; 
+  final city = 'London';
+  final apiUrl =
+      'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$apiKey&units=metric';
+
+    final response = await http.get(Uri.parse(apiUrl));
+
+     if (response.statusCode == 200) { 
+      final data = jsonDecode(response.body); 
+
+      
+      if (data.containsKey('list')) {
+        final list = data['list'];
+        for (final day in list) {
+
+          if (day.containsKey('dt') && day.containsKey('main') && day['main'].containsKey('temp')) {
+            final date = DateTime.fromMillisecondsSinceEpoch(day['dt'] * 1000); 
+            final temp = day['main']['temp']; 
+            print('${date.day}-${date.month}: ${temp}°C'); 
+      } else {
+        print('Ошибка');
+      }
+    }
+
+Задание 4
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final apiKey = 'f9FfSfbswuXTMZ2TLSr6B2hrxwnTrSnX';
+  final searchTerm = 'cat';
+  final apiUrl = 'https://api.giphy.com/v1/gifs/search?api_key=$apiKey&q=$searchTerm';
+
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+
+      if (jsonData.containsKey('data') && jsonData['data'] is List) {
+        final gifs = jsonData['data'] as List;
+        for (var gif in gifs) {
+          //Дополнительная проверка на существование необходимых вложенных ключей
+          if (gif.containsKey('images') &&
+              gif['images'].containsKey('fixed_height') &&
+              gif['images']['fixed_height'].containsKey('url')) {
+            final url = gif['images']['fixed_height']['url'];
+            print(url);
+          } else {
+            print('Неполные данные о GIF.');
+          }
+        }
+      } else {
+        print('Ошибка');
+      }
+    }
